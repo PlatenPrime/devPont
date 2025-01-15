@@ -1,50 +1,29 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Таблица поведения `this` в JavaScript
 
-Currently, two official plugins are available:
+| **Сценарий**                   | **Strict Mode** | **`this`**                                                                 | **Описание**                                                                                     |
+|--------------------------------|----------------|---------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|
+| **Глобальная область**         | ✅ Включен      | `undefined`                                                              | В strict mode `this` равен `undefined` в глобальной области.                                   |
+|                                | ❌ Выключен     | Глобальный объект (`window` / `global`)                                   | В нестрогом режиме указывает на глобальный объект.                                              |
+| **Обычная функция**            | ✅ Включен      | `undefined`                                                              | В строгом режиме `this` не указывает на глобальный объект.                                      |
+|                                | ❌ Выключен     | Глобальный объект                                                        | В нестрогом режиме `this` указывает на глобальный объект.                                       |
+| **Метод объекта**              | Любой          | Объект, которому принадлежит метод                                       | `this` ссылается на объект, вызвавший метод.                                                    |
+| **Вложенная функция в методе** | ✅ Включен      | `undefined`                                                              | Вложенная функция теряет контекст родителя.                                                     |
+|                                | ❌ Выключен     | Глобальный объект                                                        | Контекст сбрасывается на глобальный объект.                                                     |
+| **Arrow function**             | Любой          | Унаследованный `this`                                                   | У стрелочных функций `this` привязан к окружению, где они были созданы.                        |
+| **Конструктор (`new`)**        | Любой          | Новый экземпляр объекта                                                  | `this` указывает на создаваемый объект.                                                         |
+| **call/apply/bind**            | Любой          | Явно указанный объект                                                    | Контекст задается вручную с помощью `call`, `apply` или `bind`.                                 |
+| **Event Listener**             | Любой          | DOM-элемент или унаследованный `this`                                   | Зависит от типа функции: обычная — DOM-элемент, стрелочная — унаследованный `this`.             |
+| **setTimeout/setInterval**     | ✅ Включен      | `undefined`                                                              | В строгом режиме `this` сбрасывается.                                                           |
+|                                | ❌ Выключен     | Глобальный объект                                                        | В нестрогом режиме `this` равен глобальному объекту.                                            |
+| **Метод класса**               | Любой          | Экземпляр класса                                                         | В методах классов `this` указывает на текущий экземпляр.                                        |
+| **Стрелочная функция в классе**| Любой          | Унаследованный `this`                                                   | Стрелочные функции используют контекст метода, в котором они были определены.                  |
+| **IIFE**                       | ✅ Включен      | `undefined`                                                              | В строгом режиме `this` сбрасывается.                                                           |
+|                                | ❌ Выключен     | Глобальный объект                                                        | В нестрогом режиме `this` указывает на глобальный объект.                                       |
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+### Легенда:
+- ✅ **Strict Mode** — Включен.
+- ❌ **Strict Mode** — Выключен.
+- **Унаследованный `this`** — Контекст берется из окружающего кода (для стрелочных функций).
