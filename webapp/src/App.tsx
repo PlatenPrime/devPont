@@ -1,19 +1,21 @@
 export const App = () => {
+  const fos = [
+    { id: 1, title: "FO 1", description: "Description of FO1" },
+    { id: 2, title: "FO 2", description: "Description of FO2" },
+    { id: 3, title: "FO 3", description: "Description of FO3" },
+    { id: 4, title: "FO 4", description: "Description of FO4" },
+    { id: 5, title: "FO 5", description: "Description of FO5" },
+  ];
+
   return (
     <>
-      <h1>CroneBite</h1>
-      <div>
-        <h2>CB 1</h2>
-        <p>Description of CB1</p>
-      </div>
-      <div>
-        <h2>CB 2</h2>
-        <p>Description of CB2</p>
-      </div>
-      <div>
-        <h2>CB 3</h2>
-        <p>Description of CB3</p>
-      </div>
+      <h1>FoundOut</h1>
+      {fos.map((fo) => (
+        <div key={fo.id}>
+          <h2>{fo.title}</h2>
+          <p>{fo.description}</p>
+        </div>
+      ))}
     </>
   );
 };
