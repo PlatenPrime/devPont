@@ -1,5 +1,5 @@
 {
-  "name": "backend",
+  "name": "@devPont/backend",
   "version": "0.0.0",
   "main": "index.js",
   "scripts": {
